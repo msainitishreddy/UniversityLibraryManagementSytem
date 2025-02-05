@@ -12,9 +12,7 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "university_id_generator")
-    @SequenceGenerator(name = "university_id_generator", sequenceName = "university_id_seq", initialValue = 100000, allocationSize = 1)
-    private Long univeristyId;
+    private Long universityId;
 
     private String name;
 
@@ -26,6 +24,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @PrePersist
+    public void generateUniversityId() {
+        // Logic to generate a unique university ID (6 digits)
+        this.universityId = 100000L + (long) (Math.random() * 900000L);  // Random 6 digits (100000 to 999999)
+    }
+
     public Long getId() {
         return id;
     }
@@ -34,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public Long getUniveristyId() {
-        return univeristyId;
+    public Long getUniversityId() {
+        return universityId;
     }
 
-    public void setUniveristyId(Long univeristyId) {
-        this.univeristyId = univeristyId;
+    public void setUniversityId(Long universityId) {
+        this.universityId = universityId;
     }
 
     public String getName() {
@@ -73,6 +77,4 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
-
 }
